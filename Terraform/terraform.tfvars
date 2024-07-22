@@ -5,4 +5,3 @@ bucket_name                  = "devops_engineer_bucket"
 google_credential            = "key.json"
 google_sql_database_instance = "devops-mysql"
 db_password                  = "Root@123"
-
