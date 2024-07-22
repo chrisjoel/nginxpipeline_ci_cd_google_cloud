@@ -11,5 +11,6 @@ RUN apt-get update
 WORKDIR /var/www/html
 
 # Expose port 9000 and start PHP-FPM
+EXPOSE 8080
 EXPOSE 9000
 CMD ["php-fpm"]
