@@ -1,16 +1,42 @@
-# Use the official PHP image
+# Use the official Nginx image as the base
+FROM nginx:latest
 FROM php:7.4-fpm
 
-# Copy the PHP script to the container
-COPY index.php /var/www/html/
+# Additional setup if needed
 
-#update the image so as to limit vulnerabilities
-RUN apt-get update
 
-# Set the working directory
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PHP
+RUN apt-get update && apt-get install -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
 WORKDIR /var/www/html
 
-# Expose port 9000 and start PHP-FPM
+# Copy application code
+COPY . .
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
+
+# Copy Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose ports
 EXPOSE 8080
-EXPOSE 9000
-CMD ["php-fpm"]
+
+# Start Nginx and PHP-FPM
+CMD ["bash", "-c", "nginx -g 'daemon off;' & php-fpm"]

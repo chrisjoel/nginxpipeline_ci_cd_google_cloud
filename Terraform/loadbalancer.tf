@@ -43,8 +43,11 @@ resource "google_compute_region_network_endpoint_group" "default" {
   name                  = "neg"
   network_endpoint_type = "SERVERLESS"
   region                = var.region
-  cloud_run {
-    service = google_cloud_run_service.default.name
-  }
 }
 
+resource "google_cloud_run_service" "name" {
+  name     = "php-nginx-app"
+  location = var.region
+  project  = var.project_id
+  
+}
