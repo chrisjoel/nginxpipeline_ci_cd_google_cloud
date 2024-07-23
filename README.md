@@ -1,4 +1,14 @@
-#LOCAL DEPLOYMENT
+This project sets up and deploys infrastructure using Terraform, and configures a CI/CD pipeline with GitHub Actions. The deployed application is a PHP-FPM application running on Docker and Nginx.
+
+
+#Prerequisites
+- Terraform installed on vscode
+- Google Cloud SDK installed and configured on vscode
+- A Google Cloud project with billing enabled
+- Docker installed
+- GitHub account
+
+#Local deployment
 we will start our deployment by checking on docker hub https://hub.docker.com/ for the php-fpm docker repo
 
 problem encountered : there is no official image of the desired docker image
@@ -32,8 +42,18 @@ Enable Required APIs:Make sure that the necessary APIs for your project are enab
 5 artifactregistry.googleapis.com
 6 containerregistry.googleapis.com
 
+created terraform seperate files in order to be ecfficient when deploying and quickly resolve up configuration issues
+we also set variables to be flexible and permit reuse of our terraform configurations
+tfvars allows us to have different configurations for each environment without modifying the main Terraform files
 
 
+
+
+
+#Github action
+- Automation: Automate repetitive tasks such as testing, building, and deploying code.
+- Integration: Seamlessly integrates with GitHub, making it easy to trigger workflows based on repository events.
+- Customization: Highly customizable workflows to fit your specific needs.
 
 
 
@@ -48,18 +68,20 @@ Enable Required APIs:Make sure that the necessary APIs for your project are enab
 
 
 #!/bin/bash
-
-# Replace with your Cloud Run service name and region
 SERVICE_NAME="your-cloud-run-service"
-REGION="your-region"
+REGION= "your region"
 
-# Get the URL of the Cloud Run service
+#get the service url 
 SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
-
-# Extract the public IP address from the service URL
+#extract the public IP and print the result
 PUBLIC_IP=$(dig +short $(echo $SERVICE_URL | sed 's|https://||'))
-
 echo "The public IP address of the Cloud Run service is: $PUBLIC_IP"
+
+
+This README provides a comprehensive guide to setting up and deploying your infrastructure using Terraform, and configuring a CI/CD pipeline with GitHub Actions
+
+
+
 
 
 
