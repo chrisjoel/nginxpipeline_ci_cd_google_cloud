@@ -35,3 +35,32 @@ Enable Required APIs:Make sure that the necessary APIs for your project are enab
 
 
 
+
+
+
+
+
+
+
+
+
+# Bash script that retrieves the public IP address of a deployed Cloud Run service
+
+
+#!/bin/bash
+
+# Replace with your Cloud Run service name and region
+SERVICE_NAME="your-cloud-run-service"
+REGION="your-region"
+
+# Get the URL of the Cloud Run service
+SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
+
+# Extract the public IP address from the service URL
+PUBLIC_IP=$(dig +short $(echo $SERVICE_URL | sed 's|https://||'))
+
+echo "The public IP address of the Cloud Run service is: $PUBLIC_IP"
+
+
+
+
