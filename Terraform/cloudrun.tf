@@ -17,9 +17,6 @@ resource "google_cloud_run_service" "default" {
     latest_revision = true
   }
   
-  # Waits for the Cloud Run API to be enabled
-  depends_on = [google_project_service.run_api]
-
 }
 
 resource "google_cloud_run_service_iam_policy" "noauth" {
