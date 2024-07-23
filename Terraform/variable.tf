@@ -11,6 +11,11 @@ variable "project_name" {
 
 }
 
+variable "google_compute_global_forwarding_rule" {
+  description = "forwarding rule"
+  type = string 
+}
+
 variable "region" {
   description = "The region in which to create resources."
   type        = string

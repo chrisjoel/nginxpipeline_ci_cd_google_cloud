@@ -7,7 +7,7 @@ resource "google_cloud_run_service" "default" {
   template {
     spec {
       containers {
-        image = "gcr.io/${var.project_id}/php-nginx-app"
+        image = "gcr.io/${var.project_id}/php-nginx-app:latest"
       }
     }
   }
